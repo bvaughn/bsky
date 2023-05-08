@@ -1,6 +1,7 @@
 import { AtpSessionData, AtpSessionEvent, BskyAgent } from "@atproto/api";
 import { createSingleEntryCache } from "suspense";
 
+// TODO Replace with authentication
 export const agentCache = createSingleEntryCache<[], BskyAgent>({
   load: async () => {
     const agent = new BskyAgent({
