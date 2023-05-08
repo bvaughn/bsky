@@ -1,0 +1,54 @@
+:root {
+  font-family: sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: dark light;
+
+  --background-color: #131313;
+  --card-background-color: #242424;
+  --card-color: #fff;
+  --color: #fff;
+  --color-dim: #aaa;
+  --font-size-0: 0.75rem;
+  --font-size-1: 1rem;
+  --font-size-2: 1.25rem;
+  --font-size-3: 1.5rem;
+  --font-size-4: 2rem;
+}
+
+:root {
+  /* menu styles */
+  --context-menu-background-color: #242424;
+  --context-menu-border-color: transparent;
+  --context-menu-border-radius: 0.5rem;
+  --context-menu-border-size: 1px;
+  --context-menu-filter: drop-shadow(1px 2px 3px rgba(0, 0, 0, 0.5));
+  --context-menu-font-family: Arial, Helvetica, sans-serif;
+  --context-menu-padding: 0.25rem 0;
+  --context-menu-transition-duration: 250ms;
+  --context-menu-z-index: 25;
+
+  /* menu item styles */
+  --context-menu-item-background-color-disabled: #242424;
+  --context-menu-item-background-color-hover: #363636;
+  --context-menu-item-background-color-focus: #363636;
+  --context-menu-item-color: #ffffff;
+  --context-menu-item-color-disabled: #666;
+  --context-menu-item-color-hover: #ffffff;
+  --context-menu-item-color-focus: #ffffff;
+  --context-menu-item-font-size:  var(--font-size-1);
+  --context-menu-item-height: 2.5rem;
+  --context-menu-item-padding: 0 0.75rem;
+
+  /* category styles */
+  --context-menu-category-color: #999;
+  --context-menu-category-font-size: var(--font-size-0);
+  --context-menu-category-height: 1rem;
+  --context-menu-category-padding: 0 0.5rem;
+
+  /* divider styles */
+  --context-menu-divider-color: #363636;
+  --context-menu-divider-margin: 0.25rem 0;
+  --context-menu-divider-size: 1px;
+}

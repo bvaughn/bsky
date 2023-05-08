@@ -1,0 +1,57 @@
+.Profile {
+  width: 600px;
+}
+
+.Banner {
+  position: relative;
+  margin-bottom: 3.5rem;
+}
+
+.BannerImage {
+  width: 600px;
+}
+
+.AvatarImage {
+  width: 6rem;
+  height: 6rem;
+  border-radius: 6rem;
+  border: 2px solid var(--background-color);
+  position: absolute;
+  bottom: -3rem;
+  left: 1rem;
+}
+
+.DisplayName {
+  font-size: var(--font-size-3);
+}
+
+.Handle {
+  font-size: var(--font-size-1);
+  color: var(--color-dim);
+}
+
+.Description {
+  font-size: var(--font-size-1);
+  white-space: pre-wrap;
+}
+
+.CountsRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+
+.Count {
+}
+
+.CountLabel {
+  color: var(--color-dim);
+}
+
+.Posts {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem
+}

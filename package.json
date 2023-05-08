@@ -7,12 +7,19 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "typecheck": "tsc",
+    "typecheck:watch": "yarn typecheck --watch",
     "preview": "vite preview"
   },
   "dependencies": {
     "@atproto/api": "^0.2.11",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "date-fns": "^2.30.0",
+    "react": "0.0.0-experimental-16d053d59-20230506",
+    "react-dom": "0.0.0-experimental-16d053d59-20230506",
+    "react-error-boundary": "^4.0.4",
+    "react-router-dom": "^6.11.1",
+    "suspense": "^0.0.37",
+    "use-context-menu": "^0.4.4"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",
