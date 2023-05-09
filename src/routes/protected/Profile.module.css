@@ -8,10 +8,13 @@
 }
 
 .BannerImage {
+  background-color: var(--card-background-color);
   width: 600px;
+  height: 150px;
 }
 
 .AvatarImage {
+  background-color: var(--card-color);
   width: 6rem;
   height: 6rem;
   border-radius: 6rem;

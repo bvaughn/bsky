@@ -21,16 +21,24 @@ const Route = withSuspenseLoader(function Post() {
   return (
     <div className={styles.Profile}>
       <div className={styles.Banner}>
-        <img
-          alt="Banner"
-          className={styles.BannerImage}
-          src={profileView.banner}
-        />
-        <img
-          alt="Avatar"
-          className={styles.AvatarImage}
-          src={profileView.avatar}
-        />
+        {profileView.banner ? (
+          <img
+            alt="Banner"
+            className={styles.BannerImage}
+            src={profileView.banner}
+          />
+        ) : (
+          <div className={styles.BannerImage} />
+        )}
+        {profileView.avatar ? (
+          <img
+            alt="Avatar"
+            className={styles.AvatarImage}
+            src={profileView.avatar}
+          />
+        ) : (
+          <div className={styles.AvatarImage} />
+        )}
       </div>
       <div className={styles.DisplayName}>{profileView.displayName}</div>
       <div className={styles.Handle}>@{profileView.handle}</div>
