@@ -1,0 +1,54 @@
+.Form {
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.Group {
+}
+
+.GroupLabel {
+  font-size: var(--font-size-0);
+  color: var(--color-dim);
+}
+
+.InputWrapper {
+  padding: 0.5rem 0.75rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1ch;
+  border: 1px solid var(--border-color);
+  border-bottom: none;
+}
+.InputWrapper:first-of-type {
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+.InputWrapper:last-of-type {
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.Input {
+  flex: 1 1 auto;
+  background: none;
+  border: none;
+  outline: none;
+}
+
+.Icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.LearnMoreLink {
+  flex: 0 0 auto;
+  font-size: var(--font-size-0);
+}
+
+.SubmitButton {
+  padding: 0.25rem 0.5rem;
+}

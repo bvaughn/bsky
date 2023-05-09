@@ -1,18 +1,21 @@
 import { useParams } from "react-router-dom";
-import withSuspenseLoader from "../components/withSuspenseFallback";
-import { actorCache } from "../suspense/ActorCache";
-import { agentCache } from "../suspense/AgentCache";
+import withSuspenseLoader from "../../components/withSuspenseFallback";
+import { actorCache } from "../../suspense/ActorCache";
 
 import { BskyAgent } from "@atproto/api";
-import { FeedViewPost } from "../components/FeedViewPost";
-import { authorFeedCache } from "../suspense/AuthorFeedCache";
+import { useContext } from "react";
+import { FeedViewPost } from "../../components/FeedViewPost";
+import { SessionContext } from "../../contexts/SessionContext";
+import { authorFeedCache } from "../../suspense/AuthorFeedCache";
+import { assert } from "../../utils/assert";
 import styles from "./Profile.module.css";
 
 const Route = withSuspenseLoader(function Post() {
   const { handle } = useParams();
 
-  const agent = agentCache.read();
-  // const did = didCache.read(agent, handle!);
+  const { agent } = useContext(SessionContext);
+  assert(agent != null);
+
   const profileView = actorCache.read(agent, handle!);
 
   return (

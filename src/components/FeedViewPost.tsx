@@ -1,7 +1,7 @@
 import { FeedViewPost as FeedViewPostType } from "@atproto/api/dist/client/types/app/bsky/feed/defs";
 
 import { Link } from "react-router-dom";
-import { POST_ROUTE, PROFILE_ROUTE } from "../config";
+import { POST_ROUTE, PROFILE_ROUTE } from "../routes";
 import { formatRelativeTime } from "../utils/time";
 import styles from "./FeedViewPost.module.css";
 

@@ -2,7 +2,7 @@ import { ThreadViewPost as ThreadViewPostType } from "@atproto/api/dist/client/t
 
 import format from "date-fns/format";
 import { Link } from "react-router-dom";
-import { PROFILE_ROUTE } from "../config";
+import { PROFILE_ROUTE } from "../routes";
 import { usePostMenu } from "../hooks/usePostMenu";
 import { isThreadViewPost } from "../utils/bluesky";
 import { formatRelativeTime } from "../utils/time";

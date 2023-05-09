@@ -9,29 +9,35 @@ export type Route = {
 };
 
 export const PAGE_NOT_FOUND_ROUTE = {
-  Component: lazy(() => import("./routes/PageNotFound")),
+  Component: lazy(() => import("./routes/public/PageNotFound")),
   path: "*",
 };
 
 export const PROFILE_ROUTE = {
-  Component: lazy(() => import("./routes/Profile")),
+  Component: lazy(() => import("./routes/protected/Profile")),
   linkTo: (handle: string) => `/profile/${handle}`,
   path: "/profile/:handle",
 };
 
 export const POST_ROUTE = {
-  Component: lazy(() => import("./routes/Post")),
+  Component: lazy(() => import("./routes/protected/Post")),
   linkTo: (handle: string, uri: string) => `/profile/${handle}/post/${uri}`,
   path: "/profile/:handle/post/:uri",
 };
 
-export const TIMELINE_ROUTE = {
-  Component: lazy(() => import("./routes/Timeline")),
+export const SIGN_IN_ROUTE = {
+  Component: lazy(() => import("./routes/public/SignIn")),
   path: "/",
 };
 
-export const ROUTES: Route[] = [
-  PAGE_NOT_FOUND_ROUTE,
+export const TIMELINE_ROUTE = {
+  Component: lazy(() => import("./routes/protected/Timeline")),
+  path: "/",
+};
+
+export const PUBLIC_ROUTES: Route[] = [PAGE_NOT_FOUND_ROUTE];
+export const UNAUTHENTICATED_ROUTES: Route[] = [SIGN_IN_ROUTE];
+export const AUTHENTICATED_ROUTES: Route[] = [
   PROFILE_ROUTE,
   POST_ROUTE,
   TIMELINE_ROUTE,
