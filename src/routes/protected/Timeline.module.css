@@ -1,4 +1,5 @@
 .Posts {
+  margin: auto;
   width: 600px;
   display: flex;
   flex-direction: column;

@@ -7,6 +7,7 @@ import { didCache } from "../../suspense/DIDCache";
 import { postThreadCache } from "../../suspense/PostCache";
 import { assert } from "../../utils/assert";
 import { isThreadViewPost } from "../../utils/bluesky";
+import styles from "./Post.module.css";
 
 const Route = withSuspenseLoader(function Post() {
   const { handle, uri: uriFromParams } = useParams();
@@ -22,7 +23,11 @@ const Route = withSuspenseLoader(function Post() {
   console.log(postThread);
 
   if (isThreadViewPost(postThread)) {
-    return <ThreadViewPost post={postThread} />;
+    return (
+      <div className={styles.Post}>
+        <ThreadViewPost post={postThread} />
+      </div>
+    );
   } else {
     // TODO Handle other types
     return <div>Unsupported type</div>;

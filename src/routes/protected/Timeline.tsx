@@ -5,6 +5,7 @@ import { SessionContext } from "../../contexts/SessionContext";
 import { timelineCache } from "../../suspense/TimelineCache";
 import { assert } from "../../utils/assert";
 import styles from "./Timeline.module.css";
+import { ReasonRepost } from "@atproto/api/dist/client/types/app/bsky/feed/defs";
 
 const Route = withSuspenseLoader(function Timeline() {
   const { agent } = useContext(SessionContext);
@@ -15,7 +16,11 @@ const Route = withSuspenseLoader(function Timeline() {
   return (
     <div className={styles.Posts}>
       {posts.map((post) => (
-        <Post key={post.post.cid} postView={post.post} />
+        <Post
+          key={post.post.cid}
+          postView={post.post}
+          reasonRepost={post.reason as ReasonRepost}
+        />
       ))}
     </div>
   );

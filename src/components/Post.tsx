@@ -1,4 +1,7 @@
-import { PostView } from "@atproto/api/dist/client/types/app/bsky/feed/defs";
+import {
+  PostView,
+  ReasonRepost,
+} from "@atproto/api/dist/client/types/app/bsky/feed/defs";
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
 import { usePostMenu } from "../hooks/usePostMenu";
@@ -7,8 +10,15 @@ import { formatRelativeTime } from "../utils/time";
 import Icon from "./Icon";
 import styles from "./Post.module.css";
 
-export function Post({ postView }: { postView: PostView }) {
+export function Post({
+  postView,
+  reasonRepost,
+}: {
+  postView: PostView;
+  reasonRepost: ReasonRepost | undefined;
+}) {
   const { menu, onClick, onKeyDown } = usePostMenu(postView);
+  console.log(postView, reasonRepost);
 
   const record = postView.record as any; // TODO Type
 
@@ -43,6 +53,21 @@ export function Post({ postView }: { postView: PostView }) {
                   {formatRelativeTime(createdAt)}
                 </Link>
               </div>
+
+              <div className={styles.Spacer} />
+
+              {reasonRepost && (
+                <div className={styles.RepostedBy}>
+                  <Icon className={styles.ActionIcon} type="share" />
+                  <span>Reposted by</span>
+                  <Link
+                    className={styles.DisplayNameLink}
+                    to={PROFILE_ROUTE.linkTo(reasonRepost.by.handle)}
+                  >
+                    {reasonRepost.by.displayName}
+                  </Link>
+                </div>
+              )}
             </div>
             <div className={styles.AuthorBottomRow}>
               <Link

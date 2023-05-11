@@ -3,6 +3,7 @@ import withSuspenseLoader from "../../components/withSuspenseFallback";
 import { actorCache } from "../../suspense/ActorCache";
 
 import { BskyAgent } from "@atproto/api";
+import { ReasonRepost } from "@atproto/api/dist/client/types/app/bsky/feed/defs";
 import { useContext } from "react";
 import { Post } from "../../components/Post";
 import { SessionContext } from "../../contexts/SessionContext";
@@ -76,7 +77,11 @@ const Posts = withSuspenseLoader(function Posts({
   return (
     <div className={styles.Posts}>
       {posts.map((post) => (
-        <Post key={post.post.cid} postView={post.post} />
+        <Post
+          key={post.post.cid}
+          postView={post.post}
+          reasonRepost={post.reason as ReasonRepost}
+        />
       ))}
     </div>
   );
