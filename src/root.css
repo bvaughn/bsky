@@ -1,5 +1,6 @@
 :root {
   font-family: sans-serif;
+  font-size: 16px;
   line-height: 1.5;
   font-weight: 400;
 
@@ -38,8 +39,8 @@
   --context-menu-item-color-disabled: #666;
   --context-menu-item-color-hover: #ffffff;
   --context-menu-item-color-focus: #ffffff;
-  --context-menu-item-font-size:  var(--font-size-1);
-  --context-menu-item-height: 2.5rem;
+  --context-menu-item-font-size: var(--font-size-1);
+  --context-menu-item-height: 2.25rem;
   --context-menu-item-padding: 0 0.75rem;
 
   /* category styles */

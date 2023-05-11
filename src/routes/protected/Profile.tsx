@@ -4,7 +4,7 @@ import { actorCache } from "../../suspense/ActorCache";
 
 import { BskyAgent } from "@atproto/api";
 import { useContext } from "react";
-import { FeedViewPost } from "../../components/FeedViewPost";
+import { Post } from "../../components/Post";
 import { SessionContext } from "../../contexts/SessionContext";
 import { authorFeedCache } from "../../suspense/AuthorFeedCache";
 import { assert } from "../../utils/assert";
@@ -76,7 +76,7 @@ const Posts = withSuspenseLoader(function Posts({
   return (
     <div className={styles.Posts}>
       {posts.map((post) => (
-        <FeedViewPost key={post.post.cid} post={post} />
+        <Post key={post.post.cid} postView={post.post} />
       ))}
     </div>
   );

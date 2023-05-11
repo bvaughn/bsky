@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { FeedViewPost } from "../../components/FeedViewPost";
+import { Post } from "../../components/Post";
 import withSuspenseLoader from "../../components/withSuspenseFallback";
 import { SessionContext } from "../../contexts/SessionContext";
 import { timelineCache } from "../../suspense/TimelineCache";
@@ -15,7 +15,7 @@ const Route = withSuspenseLoader(function Timeline() {
   return (
     <div className={styles.Posts}>
       {posts.map((post) => (
-        <FeedViewPost key={post.post.cid} post={post} />
+        <Post key={post.post.cid} postView={post.post} />
       ))}
     </div>
   );

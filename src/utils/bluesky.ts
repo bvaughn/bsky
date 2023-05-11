@@ -1,4 +1,12 @@
-import { AtpSessionData, AtpSessionEvent, BskyAgent } from "@atproto/api";
+import {
+  AppBskyEmbedExternal,
+  AppBskyEmbedImages,
+  AppBskyEmbedRecord,
+  AppBskyEmbedRecordWithMedia,
+  AtpSessionData,
+  AtpSessionEvent,
+  BskyAgent,
+} from "@atproto/api";
 import { ThreadViewPost } from "@atproto/api/dist/client/types/app/bsky/feed/defs";
 
 const DEFAULT_SERVICE = "https://bsky.social";
@@ -41,6 +49,26 @@ function createAgent(service?: string) {
       }
     },
   });
+}
+
+export function isExternalEmbed(
+  value: any
+): value is AppBskyEmbedExternal.View {
+  return value.$type === "app.bsky.embed.external";
+}
+
+export function isImageEmbed(value: any): value is AppBskyEmbedImages.View {
+  return value.$type === "app.bsky.embed.images";
+}
+
+export function isRecordEmbed(value: any): value is AppBskyEmbedRecord.View {
+  return value.$type === "app.bsky.embed.record";
+}
+
+export function isMediaRecordEmbed(
+  value: any
+): value is AppBskyEmbedRecordWithMedia.View {
+  return value.$type === "app.bsky.embed.record-TODO";
 }
 
 export function isThreadViewPost(value: any): value is ThreadViewPost {
