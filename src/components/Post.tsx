@@ -3,7 +3,7 @@ import {
   ReasonRepost,
 } from "@atproto/api/dist/client/types/app/bsky/feed/defs";
 import { format } from "date-fns";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { usePostMenu } from "../hooks/usePostMenu";
 import { POST_ROUTE, PROFILE_ROUTE } from "../routes";
 import { formatRelativeTime } from "../utils/time";
@@ -19,20 +19,20 @@ export function Post({
   postView: PostView;
   reasonRepost: ReasonRepost | undefined;
 }) {
-  console.log(postView);
+  const { uri: uriFromParams } = useParams();
+
   const { menu, onClick, onKeyDown } = usePostMenu(postView);
 
   const record = postView.record as any; // TODO Type
 
   const createdAt = new Date(record.createdAt);
 
-  const isRoot = !record.reply;
-  const showLineAfter = hasReplies && !isRoot;
-  const showLineBefore =
-    record.reply && record.reply.parent.cid !== record.reply.root.cid;
-
   // e.g. at://did:plc:4w3lx5jmokfvihilz2q562ev/app.bsky.feed.post/3jv6commtli2u
   const uri = postView.uri.split("/").pop() as string;
+
+  const isRoot = uri === uriFromParams;
+
+  const showThreadLine = hasReplies && !isRoot;
 
   return (
     <div
@@ -40,7 +40,7 @@ export function Post({
       data-type={isRoot ? "root" : "nested"}
       data-is-leaf-node={!hasReplies || undefined}
     >
-      {showLineAfter && <div className={styles.ChildConnectorLine} />}
+      {showThreadLine && <div className={styles.ChildConnectorLine} />}
 
       <div className={styles.Top}>
         <div className={styles.Author}>
