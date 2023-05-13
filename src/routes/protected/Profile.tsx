@@ -70,9 +70,7 @@ const Posts = withSuspenseLoader(function Posts({
   agent: BskyAgent;
   handle: string;
 }) {
-  console.log(`<Posts handle="${handle}">`);
   const posts = authorFeedCache.read(agent, handle);
-  console.log("<Posts>", posts);
 
   return (
     <div className={styles.Posts}>

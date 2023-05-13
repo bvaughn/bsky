@@ -11,24 +11,37 @@ import Icon from "./Icon";
 import styles from "./Post.module.css";
 
 export function Post({
+  hasReplies = false,
   postView,
   reasonRepost,
 }: {
+  hasReplies?: boolean;
   postView: PostView;
   reasonRepost: ReasonRepost | undefined;
 }) {
+  console.log(postView);
   const { menu, onClick, onKeyDown } = usePostMenu(postView);
-  console.log(postView, reasonRepost);
 
   const record = postView.record as any; // TODO Type
 
   const createdAt = new Date(record.createdAt);
 
+  const isRoot = !record.reply;
+  const showLineAfter = hasReplies && !isRoot;
+  const showLineBefore =
+    record.reply && record.reply.parent.cid !== record.reply.root.cid;
+
   // e.g. at://did:plc:4w3lx5jmokfvihilz2q562ev/app.bsky.feed.post/3jv6commtli2u
   const uri = postView.uri.split("/").pop() as string;
 
   return (
-    <div className={styles.Post}>
+    <div
+      className={styles.Post}
+      data-type={isRoot ? "root" : "nested"}
+      data-is-leaf-node={!hasReplies || undefined}
+    >
+      {showLineAfter && <div className={styles.ChildConnectorLine} />}
+
       <div className={styles.Top}>
         <div className={styles.Author}>
           <img
@@ -83,13 +96,15 @@ export function Post({
         <div className={styles.Text}>{record.text ?? ""}</div>
 
         {/* TODO Media */}
-
-        <div className={styles.Time}>
-          {format(createdAt, "LLL d, yyyy 'at' h:mm a")}
-        </div>
       </div>
 
       <div className={styles.Bottom}>
+        {isRoot && (
+          <div className={styles.Time}>
+            {format(createdAt, "LLL d, yyyy 'at' h:mm a")}
+          </div>
+        )}
+
         <div className={styles.ActionsRow}>
           <button className={styles.ActionButton}>
             <Icon className={styles.ActionIcon} type="comment" />
@@ -97,14 +112,23 @@ export function Post({
               <div className={styles.Count}>{postView.replyCount}</div>
             )}
           </button>
-          <button className={styles.ActionButton}>
+          <button
+            className={styles.ActionButton}
+            data-action={postView.viewer?.repost ? "shared" : undefined}
+          >
             <Icon className={styles.ActionIcon} type="share" />
             {postView.repostCount && postView.repostCount > 0 && (
               <div className={styles.Count}>{postView.repostCount}</div>
             )}
           </button>
-          <button className={styles.ActionButton}>
-            <Icon className={styles.ActionIcon} type="like" />
+          <button
+            className={styles.ActionButton}
+            data-action={postView.viewer?.like ? "liked" : undefined}
+          >
+            <Icon
+              className={styles.ActionIcon}
+              type={postView.viewer?.like ? "liked" : "like"}
+            />
             {postView.likeCount && postView.likeCount > 0 && (
               <div className={styles.Count}>{postView.likeCount}</div>
             )}

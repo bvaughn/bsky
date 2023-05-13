@@ -20,7 +20,6 @@ const Route = withSuspenseLoader(function Post() {
   const uri = `at://${did}/app.bsky.feed.post/${uriFromParams}`;
 
   const postThread = postThreadCache.read(agent, uri);
-  console.log(postThread);
 
   if (isThreadViewPost(postThread)) {
     return (
