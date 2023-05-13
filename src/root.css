@@ -56,3 +56,8 @@
   --context-menu-divider-margin: 0.25rem 0;
   --context-menu-divider-size: 1px;
 }
+
+#root {
+  width: 600px;
+  margin: 0 auto;
+}
