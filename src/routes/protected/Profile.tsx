@@ -4,20 +4,25 @@ import { actorCache } from "../../suspense/ActorCache";
 
 import { BskyAgent } from "@atproto/api";
 import { ReasonRepost } from "@atproto/api/dist/client/types/app/bsky/feed/defs";
-import { useContext } from "react";
+import { useCallback, useContext } from "react";
+import { useCacheMutation } from "suspense";
 import { Post } from "../../components/Post";
 import { SessionContext } from "../../contexts/SessionContext";
-import { authorFeedCache } from "../../suspense/AuthorFeedCache";
+import {
+  authorFeedCache,
+  authorFeedCacheLoader,
+} from "../../suspense/AuthorFeedCache";
 import { assert } from "../../utils/assert";
 import styles from "./Profile.module.css";
 
 const Route = withSuspenseLoader(function Post() {
   const { handle } = useParams();
+  assert(handle != null);
 
   const { agent } = useContext(SessionContext);
   assert(agent != null);
 
-  const profileView = actorCache.read(agent, handle!);
+  const profileView = actorCache.read(agent, handle);
 
   return (
     <div className={styles.Profile}>
@@ -58,7 +63,7 @@ const Route = withSuspenseLoader(function Post() {
         </div>
       </div>
       <div className={styles.Description}>{profileView.description}</div>
-      <Posts agent={agent} handle={handle!} />
+      <Posts agent={agent} handle={handle} />
     </div>
   );
 });
@@ -72,11 +77,27 @@ const Posts = withSuspenseLoader(function Posts({
 }) {
   const posts = authorFeedCache.read(agent, handle);
 
+  const { isPending, mutateAsync } = useCacheMutation(authorFeedCache);
+
+  const mutateAsyncWrapper = useCallback(
+    (callback: () => Promise<void>) => {
+      mutateAsync([agent, handle], async () => {
+        await callback();
+
+        return authorFeedCacheLoader(agent, handle);
+      });
+    },
+    [agent, handle, mutateAsync]
+  );
+
   return (
     <div className={styles.Posts}>
       {posts.map((post) => (
         <Post
+          hasReplies={false}
+          isPending={isPending}
           key={post.post.cid}
+          mutateAsync={mutateAsyncWrapper}
           postView={post.post}
           reasonRepost={post.reason as ReasonRepost}
         />

@@ -93,3 +93,7 @@ export async function restoreSavedSession(): Promise<BskyAgent | null> {
 
   return null;
 }
+
+export function paramsToUri(did: string, uriShort: string): string {
+  return `at://${did}/app.bsky.feed.post/${uriShort}`;
+}

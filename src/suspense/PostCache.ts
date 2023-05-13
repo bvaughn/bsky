@@ -18,13 +18,18 @@ export const postsCache = createCache<
 >({
   debugLabel: "app.bsky.feed.getPosts",
   getKey: ([agent, uris]) => uris.join(","),
-  load: async ([agent, uris]) => {
-    const result = await agent.getPosts({
-      uris,
-    });
-    return result.data.posts;
-  },
+  load: async ([agent, uris]) => postsCacheLoader(agent, uris),
 });
+
+export async function postsCacheLoader(
+  agent: BskyAgent,
+  uris: string[]
+): Promise<PostView[]> {
+  const result = await agent.getPosts({
+    uris,
+  });
+  return result.data.posts;
+}
 
 // https://atproto.com/lexicons/app-bsky-feed#appbskyfeedgetpostthread
 export const postThreadCache = createCache<
@@ -33,11 +38,17 @@ export const postThreadCache = createCache<
 >({
   debugLabel: "app.bsky.feed.getPostThread",
   getKey: ([agent, uri, depth]) => `${uri}-${depth}`,
-  load: async ([agent, uri, depth]) => {
-    const result = await agent.getPostThread({
-      uri,
-      depth,
-    });
-    return result.data.thread as ThreadViewPost | NotFoundPost | BlockedPost;
-  },
+  load: async ([agent, uri, depth]) => postThreadCacheLoader(agent, uri, depth),
 });
+
+export async function postThreadCacheLoader(
+  agent: BskyAgent,
+  uri: string,
+  depth?: number
+): Promise<ThreadViewPost | NotFoundPost | BlockedPost> {
+  const result = await agent.getPostThread({
+    uri,
+    depth,
+  });
+  return result.data.thread as ThreadViewPost | NotFoundPost | BlockedPost;
+}

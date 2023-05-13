@@ -11,10 +11,15 @@ export const authorFeedCache = createCache<
 >({
   debugLabel: "app.bsky.feed.getAuthorFeed",
   getKey: ([agent, actor]) => actor,
-  load: async ([agent, actor]) => {
-    const response = await agent.getAuthorFeed({
-      actor,
-    });
-    return response.data.feed;
-  },
+  load: async ([agent, actor]) => authorFeedCacheLoader(agent, actor),
 });
+
+export async function authorFeedCacheLoader(
+  agent: BskyAgent,
+  actor: string
+): Promise<FeedViewPost[]> {
+  const response = await agent.getAuthorFeed({
+    actor,
+  });
+  return response.data.feed;
+}

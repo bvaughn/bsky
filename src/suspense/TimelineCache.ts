@@ -8,8 +8,13 @@ export const timelineCache = createSingleEntryCache<
   [agent: BskyAgent],
   FeedViewPost[]
 >({
-  load: async ([agent]) => {
-    const response = await agent.getTimeline();
-    return response.data.feed;
-  },
+  debugLabel: "app.bsky.feed.getTimeline",
+  load: async ([agent]) => timelineCacheLoader(agent),
 });
+
+export async function timelineCacheLoader(
+  agent: BskyAgent
+): Promise<FeedViewPost[]> {
+  const response = await agent.getTimeline();
+  return response.data.feed;
+}

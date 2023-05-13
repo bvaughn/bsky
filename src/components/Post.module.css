@@ -163,6 +163,9 @@
   appearance: none;
   cursor: pointer;
 }
+.ActionButton:disabled {
+  opacity: 0.5;
+}
 .ActionButton:hover,.ActionButton:focus {
   outline: none;
   border: none;

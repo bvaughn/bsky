@@ -3,23 +3,33 @@ import {
   ReasonRepost,
 } from "@atproto/api/dist/client/types/app/bsky/feed/defs";
 import { format } from "date-fns";
+import { useContext } from "react";
 import { Link, useParams } from "react-router-dom";
+import { SessionContext } from "../contexts/SessionContext";
 import { usePostMenu } from "../hooks/usePostMenu";
 import { POST_ROUTE, PROFILE_ROUTE } from "../routes";
+import { assert } from "../utils/assert";
 import { formatRelativeTime } from "../utils/time";
 import Icon from "./Icon";
 import styles from "./Post.module.css";
 
 export function Post({
-  hasReplies = false,
+  hasReplies,
+  isPending,
+  mutateAsync,
   postView,
   reasonRepost,
 }: {
-  hasReplies?: boolean;
+  hasReplies: boolean;
+  isPending: boolean;
+  mutateAsync: (callback: () => Promise<void>) => void;
   postView: PostView;
   reasonRepost: ReasonRepost | undefined;
 }) {
   const { uri: uriFromParams } = useParams();
+
+  const { agent } = useContext(SessionContext);
+  assert(agent != null);
 
   const { menu, onClick, onKeyDown } = usePostMenu(postView);
 
@@ -33,6 +43,17 @@ export function Post({
   const isRoot = uri === uriFromParams;
 
   const showThreadLine = hasReplies && !isRoot;
+
+  const toggleLike = () => {
+    mutateAsync(async () => {
+      // https://atproto.com/lexicons/app-bsky-feed#appbskyfeedlike
+      if (postView.viewer?.like) {
+        await agent.deleteLike(postView.viewer?.like);
+      } else {
+        await agent.like(postView.uri, postView.cid);
+      }
+    });
+  };
 
   return (
     <div
@@ -124,6 +145,8 @@ export function Post({
           <button
             className={styles.ActionButton}
             data-action={postView.viewer?.like ? "liked" : undefined}
+            disabled={isPending}
+            onClick={toggleLike}
           >
             <Icon
               className={styles.ActionIcon}
