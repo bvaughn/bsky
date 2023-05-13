@@ -96,7 +96,7 @@ const Posts = withSuspenseLoader(function Posts({
         <Post
           hasReplies={false}
           isPending={isPending}
-          key={post.post.cid}
+          key={post.reason ? `${post.post.cid}-repost` : post.post.cid}
           mutateAsync={mutateAsyncWrapper}
           postView={post.post}
           reasonRepost={post.reason as ReasonRepost}

@@ -55,6 +55,17 @@ export function Post({
     });
   };
 
+  const toggleShare = () => {
+    mutateAsync(async () => {
+      // https://atproto.com/lexicons/app-bsky-feed#appbskyfeedrepost
+      if (postView.viewer?.repost) {
+        await agent.deleteRepost(postView.viewer?.repost);
+      } else {
+        await agent.repost(postView.uri, postView.cid);
+      }
+    });
+  };
+
   return (
     <div
       className={styles.Post}
@@ -136,6 +147,7 @@ export function Post({
           <button
             className={styles.ActionButton}
             data-action={postView.viewer?.repost ? "shared" : undefined}
+            onClick={toggleShare}
           >
             <Icon className={styles.ActionIcon} type="share" />
             {postView.repostCount && postView.repostCount > 0 && (
